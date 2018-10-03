@@ -24,10 +24,32 @@ public class config {
         if (!file.exists()) {
             configyml.set("title", "Willkommen");
             configyml.set("author", "Spyrex");
-            List<String> l = new ArrayList<>();
-            l.add("&1Seite 1");
-            l.add("&1Seite 2");
-            l.add("&1Seite 3");
+            List<List<String>> l = new ArrayList<>();
+            List<String> page1 = new ArrayList<>();
+            page1.add("&1hallo");
+            page1.add("&1hallo2");
+            page1.add("&1hallo3");
+            page1.add("&1hallo4");
+            page1.add("&1hallo5");
+
+            l.add(page1);
+            List<String> page2 = new ArrayList<>();
+            page2.add("&1hallo6");
+            page2.add("&1hallo7");
+            page2.add("&1hallo8");
+            page2.add("&1hallo9");
+            page2.add("&1hallo10");
+
+
+            l.add(page2);
+
+            List<String> page3 = new ArrayList<>();
+            page3.add("&1hallo11");
+            page3.add("&1hallo12");
+            page3.add("&1hallo13");
+            page3.add("&1hallo14");
+            page3.add("&1hallo15");
+            l.add(page3);
             configyml.set("Pages", l);
             try {
                 configyml.save(file);
@@ -46,16 +68,21 @@ public class config {
         return ChatColor.translateAlternateColorCodes('&', config.getString("author"));
     }
 
-    public static List<String> getPages() {
-        List<String> l = config.getStringList("Pages");
+    public static List<List<String>> getPages() {
+        List<List<String>> l = (List<List<String>>) config.get("Pages");
 
-        List<String> list = new ArrayList<>();
+        List<List<String>> toreturn = new ArrayList<>();
 
-        for (String string : l) {
-            list.add(ChatColor.translateAlternateColorCodes('&', string));
+
+        for(List<String> li : l) {
+            List<String> list = new ArrayList<>();
+            for (String string : li) {
+                list.add(ChatColor.translateAlternateColorCodes('&', string));
+            }
+            toreturn.add(list);
+
         }
-
-        return list;
+        return toreturn;
     }
 
     public static UTFConfig getConfig() {

@@ -8,6 +8,8 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class Methoden {
 
     public static void openBook(ItemStack book, Player p) {
@@ -20,14 +22,19 @@ public class Methoden {
 
     }
 
-    public static ItemStack book(String title, String author, String... pages) {
+    public static ItemStack book(String title, String author, List<List<String>> pages) {
         ItemStack is = new ItemStack(Material.WRITTEN_BOOK, 1);
         net.minecraft.server.v1_8_R3.ItemStack nmsis = CraftItemStack.asNMSCopy(is);
         NBTTagCompound bd = new NBTTagCompound();
         bd.setString("title", title);
         bd.setString("author", author);
         NBTTagList bp = new NBTTagList();
-        for (String text : pages) {
+        for (List<String> l : pages) {
+            String text = "";
+            for (String s : l) {
+                text = text + s + "\n";
+            }
+
             bp.add(new NBTTagString(text));
         }
         bd.set("pages", bp);
@@ -36,11 +43,9 @@ public class Methoden {
         return is;
     }
 
-    public static void open(Player p){
-        openBook(book(config.getTitle(), config.getAuthor(), config.getPages().toArray(new String[0])), p);
+    public static void open(Player p) {
+        openBook(book(config.getTitle(), config.getAuthor(), config.getPages()), p);
     }
-
-
 
 
 }
